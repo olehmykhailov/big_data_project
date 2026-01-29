@@ -102,13 +102,13 @@ Dane o złocie są obsługiwane przez osobny punkt końcowy (endpoint). NBP publ
 
 ### 5.1 Strony raportu
 
-* **Kursy walut (Currency Rates)**:
+#### **Kursy walut (Currency Rates)**:
 * Wykres liniowy w czasie.
 * Filtry: waluta, rok.
 * Karty z podstawowymi metrykami statystycznymi (min, max, średnia).
 
 
-* **Ceny złota (Gold Prices)**:
+#### **Ceny złota (Gold Prices)**:
 * Wykres liniowy trendu cen złota.
 * Filtry: zakres dat, rok.
 * Karty z aktualną ceną i zmianą procentową.
