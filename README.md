@@ -119,3 +119,93 @@ Dane o złocie są obsługiwane przez osobny punkt końcowy (endpoint). NBP publ
 
 * W 2022 ewidentnie widać spadek jednych z najpopularniejszych cen walut takich jak Euro czy Dolar Amerykański i jednoczesny dynamiczny wzrost cen złota. Taka reakcja rynku najprawdopodobniej jest spowodowana rosnącymi niepokojami wśród inwestorów związanych z konfliktami zbrojnymi na świecie i napiętą sytuacją geopolityczną. 
 * Spadki Euro spowodowane są wojną w regionie, tuż za granią Unii Europejskiej a Stany Zjednoczone angażują się w konflikty zbrojne oraz prezydent podejmuje mało przewidywalne decyzje, które zachęcają prywatnych inwestorów do przeniesienia pieniędzy w aktywo nie powiązane ze Stanami Zjednoczonymi, podobną dynamikę możemy zauważyć w bankach centralnych, które skupują złoto jednocześnie powoli odchodząc od Dolara Amerykańskiego choć w dalszym ciągu Dolar Amerykański pozostaje bardzo ważną walutą rezerwową dla wielu państw.
+
+---
+
+## 7. Instrukcja uruchomienia
+
+### Klonowanie repozytorium
+```bash
+git clone <URL_DO_REPOZYTORIUM>
+cd big_data_project
+```
+
+### Instalacja zależności
+```bash
+# Zalecane utworzenie wirtualnego środowiska
+python -m venv venv
+.\venv\Scripts\Activate.ps1  # Windows
+# source venv/bin/activate # Linux/Mac
+
+pip install -r requirements.txt
+```
+
+### Konfiguracja
+Utwórz plik `.env` i skonfiguruj połączenie do bazy danych:
+```env
+DATABASE_URL=postgresql://user:password@host:port/dbname
+```
+
+### Uruchomienie ETL
+
+Skrypt `etl.py` udostępnia interfejs CLI z trzema trybami:
+
+1. **Inicjalizacja** (wypełnienie słownika walut):
+   ```bash
+   python etl.py init --csv-path currencies.csv
+   ```
+
+2. **Pobranie danych dziennych** (dla bieżącej daty):
+   ```bash
+   python etl.py daily
+   ```
+
+3. **Pobranie danych historycznych** (zakres dat):
+   ```bash
+   python etl.py history --start 2024-01-01 --end 2024-12-31
+   ```
+
+---
+
+## 8. Struktura plików i przepływ danych
+
+Poniżej przedstawiono kluczowe pliki w projekcie oraz ich rolę w architekturze rozwiązania.
+
+### 8.1 Opis komponentów
+
+* **`etl.py`**:
+  * Główny punkt wejścia dla operacji lokalnych/CLI.
+  * Orkiestruje proces pobierania danych z NBP i zapisu do bazy.
+  * Obsługuje tryby: `init` (ładowanie słowników), `daily` (dzienne pobieranie), `history` (uzupełnianie wsteczne).
+
+* **`nbp_client.py`**:
+  * Warstwa komunikacji z REST API Narodowego Banku Polskiego.
+  * Odpowiada za wysyłanie żądań HTTP i wstępne przetwarzanie odpowiedzi (JSON).
+
+* **`lambda_handler.py`**:
+  * Adapter dla środowiska AWS Lambda.
+  * Odbiera zdarzenia (events) z Amazon EventBridge, mapuje je na funkcje z `etl.py` i zarządza cyklem życia połączenia z bazą.
+
+* **`database/`**:
+  * **`models.py`**: Definicje tabel w ORM (SQLAlchemy) - `Currency`, `CurrencyRate`, `GoldPrice`.
+  * **`db.py`**: Konfiguracja połączenia z bazą danych (SessionMaker, Engine).
+
+* **`wiki_parser.py`**:
+  * Moduł pomocniczy do scrapowania kodów walut i ich nazw z Wikipedii (ISO 4217), służący do generowania/aktualizacji pliku `currencies.csv`.
+
+* **`currencies.csv`**:
+  * Statyczny plik inicjalizacyjny zawierający listę obsługiwanych walut (kod, nazwa, typ tabeli NBP).
+
+### 8.2 Interakcja modułów
+
+1. **Uruchomienie**:
+   * Użytkownik (CLI) -> `etl.py`
+   * EventBridge (AWS) -> `lambda_handler.py` -> `etl.py`
+   
+2. **Pobieranie danych**:
+   * `etl.py` -> `nbp_client.py` -> **NBP API** (Internet)
+
+3. **Przetwarzanie i Zapis**:
+   * `etl.py` odbiera dane -> transformuje struktury -> `database/models.py`
+   * `etl.py` -> `database/db.py` -> **PostgreSQL**
+
