@@ -3,7 +3,7 @@
 **Wykonali:** 
 * Oleh Mykhailov
 * Katsiaryna Krupieńka
-* Krzystof Bajda
+* Krzysztof Bajda
 
 **Cel projektu:** Pozyskiwanie danych o kursach walut oraz cenach złota z wykorzystaniem NBP API, ich składowanie oraz wizualizacja.
 
