@@ -1,0 +1,9 @@
+__pycache__
+.git
+.env
+.venv
+# Exclude locally installed packages (from pip install -t .) to prevent conflicts
+# It's hard to list them all, but we will rely on Explicit COPY in Dockerfile
+# But general good practice ignores:
+*.pyc
+*.pyo

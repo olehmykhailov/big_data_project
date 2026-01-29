@@ -1,0 +1,176 @@
+code,name,table
+AED,Dirham ZEA,b
+AFN,Afgani,b
+ALL,Lek,b
+AMD,Dram,b
+AOA,Kwanza,b
+ARS,Peso argentyńskie,b
+AUD,Dolar australijski,a
+AWG,Florin arubański,b
+AZN,Manat azerbejdżański,b
+BAM,Marka zamienna,b
+BBD,Dolar barbadoski,b
+BDT,Taka,b
+BGN,Lew,a
+BHD,Dinar bahrajski,b
+BIF,Frank burundyjski,b
+BMD,Dolar bermudzki,b
+BND,Dolar brunejski,b
+BOB,Boliviano,b
+BOV,MVDOL boliwijski,b
+BRL,Real brazylijski,a
+BSD,Dolar bahamski,b
+BTN,Ngultrum,b
+BWP,Pula,b
+BYN,Rubel białoruski,b
+BZD,Dolar belizeński,b
+CAD,Dolar kanadyjski,a
+CDF,Frank kongijski,b
+CHE,WIR Euro (Waluta lokalna),b
+CHF,Frank szwajcarski,a
+CHW,WIR Frank (Waluta lokalna),b
+CLF,Unidad de Fomento,b
+CLP,Peso chilijskie,a
+CNY,Renminbi[2],a
+COP,Peso kolumbijskie,b
+COU,Unidad de Valor Real (UVR)[3],b
+CRC,Colon kostarykański,b
+CUP,Peso kubańskie,b
+CVE,Escudo Zielonego Przylądka,b
+CZK,Korona czeska,a
+DJF,Frank Dżibuti,b
+DKK,Korona duńska,a
+DOP,Peso dominikańskie,b
+DZD,Dinar algierski,b
+EGP,Funt egipski,b
+ERN,Nakfa,b
+ETB,Birr,b
+EUR,Euro,a
+FJD,Dolar Fidżi,b
+FKP,Funt falklandzki,b
+GBP,Funt szterling,a
+GEL,Lari,b
+GHS,Cedi,b
+GIP,Funt gibraltarski,b
+GMD,Dalasi,b
+GNF,Frank gwinejski,b
+GTQ,Quetzal,b
+GYD,Dolar gujański,b
+HKD,Dolar Hongkongu,a
+HNL,Lempira,b
+HTG,Gourde,b
+HUF,Forint,a
+IDR,Rupia indonezyjska,a
+ILS,Nowy izraelski szekel,a
+INR,Rupia indyjska,a
+IQD,Dinar iracki,b
+IRR,Rial irański,b
+ISK,Korona islandzka,a
+JMD,Dolar jamajski,b
+JOD,Dinar jordański,b
+JPY,Jen,a
+KES,Szyling kenijski,b
+KGS,Som,b
+KHR,Riel kambodżański,b
+KMF,Frank Komorów,b
+KPW,Won północnokoreański,b
+KRW,Won południowokoreański,a
+KWD,Dinar kuwejcki,b
+KYD,Dolar kajmański,b
+KZT,Tenge,b
+LAK,Kip,b
+LBP,Funt libański,b
+LKR,Rupia lankijska,b
+LRD,Dolar liberyjski,b
+LSL,Loti,b
+LYD,Dinar libijski,b
+MAD,Dirham marokański,b
+MDL,Lej mołdawski,b
+MGA,Ariary,b
+MKD,Denar,b
+MMK,Kiat,b
+MNT,Tugrik,b
+MOP,Pataca,b
+MRU[7],Ugija,b
+MUR,Rupia Mauritiusu,b
+MVR,Rupia malediwska,b
+MWK,Kwacha malawijska,b
+MXN,Peso meksykańskie,a
+MXV,Mexican unidad de inversión (UDI),b
+MYR,Ringgit,a
+MZN,Metical,b
+NAD,Dolar namibijski,b
+NGN,Naira,b
+NIO,Córdoba,b
+NOK,Korona norweska,a
+NPR,Rupia nepalska,b
+NZD,Dolar nowozelandzki,a
+OMR,Rial omański,b
+PAB,Balboa,b
+PEN,Sol,b
+PGK,Kina,b
+PHP,Peso filipińskie[8],a
+PKR,Rupia pakistańska,b
+PLN,Polski złoty,b
+PYG,Guaraní,b
+QAR,Rial katarski,b
+RON,Lej rumuński,a
+RSD,Dinar serbski,b
+RUB,Rubel rosyjski,a
+RWF,Frank rwandyjski,b
+SAR,Rial saudyjski,b
+SBD,Dolar Wysp Salomona,b
+SCR,Rupia seszelska,b
+SDG,Funt sudański,b
+SEK,Korona szwedzka,a
+SGD,Dolar singapurski,a
+SHP,Funt Świętej Heleny,b
+SLL,Leone,b
+SOS,Szyling somalijski,b
+SRD,Dolar surinamski,b
+SSP,Funt południowosudański,b
+STN[9],Dobra,b
+SVC,Colón salwadorski,b
+SYP,Funt syryjski,b
+SZL,Lilangeni,b
+THB,Bat,a
+TJS,Somoni,b
+TMT,Manat turkmeński,b
+TND,Dinar tunezyjski,b
+TOP,Paʻanga,b
+TRY,Lira turecka,a
+TTD,Dolar Trynidadu i Tobago,b
+TWD,Dolar tajwański,b
+TZS,Szyling tanzański,b
+UAH,Hrywna,a
+UGX,Szyling ugandyjski,b
+USD,Dolar amerykański,a
+USN,Dolar amerykański (next day),b
+UYI,Uruguay Peso en Unidades Indexadas (URUIURUI),b
+UYU,Peso urugwajskie,b
+UYW,Unidad previsional[10],b
+UZS,Sum,b
+VES,Boliwar[8],b
+VND,Đồng,b
+VUV,Vatu,b
+WST,Tala,b
+XAF,Frank CFA,b
+XAG,Srebro (jedna uncja trojańska),b
+XAU,Złoto (jedna uncja trojańska),b
+XBA,Europejska Jednostka Rozrachunkowa (EURCO) (jednostka na rynku obligacji),b
+XBB,Europejska Jednostka Rozrachunkowa (E.M.U.-6) (jednostka na rynku obligacji),b
+XBC,Europejska Jednostka Rozrachunkowa (E.U.A.-9) (jednostka na rynku obligacji),b
+XBD,Europejska Jednostka Rozrachunkowa (E.U.A.-17) (jednostka na rynku obligacji),b
+XCD,Dolar wschodniokaraibski,b
+XCG,Gulden karaibski,b
+XDR,Specjalne prawa ciągnienia,a
+XOF,Frank CFA,b
+XPD,Pallad (jedna uncja trojańska),b
+XPF,Frank CFP,b
+XPT,Platyna (jedna uncja trojańska),b
+XSU,SUCRE,b
+XUA,Afrykański Bank Rozwoju,b
+YER,Rial jemeński,b
+ZAR,Rand,a
+ZMW,Kwacha zambijska,b
+ZWL,Dolar Zimbabwe,b
