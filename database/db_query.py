@@ -12,20 +12,19 @@ QUERIED_DATA_PATH = PROJECT_ROOT / "queried_data"
 os.makedirs(QUERIED_DATA_PATH, exist_ok=True)
 
 def get_all_currency_data(session: Session, currency_code) -> list[CurrencyRate]:
-    with SessionLocal as session:
-        stmt = select(CurrencyRate).where(CurrencyRate.currency_code == currency_code)
-        results = session.execute(stmt).scalars().all()
-        return results
+    stmt = select(CurrencyRate).where(CurrencyRate.currency_code == currency_code)
+    results = session.execute(stmt).scalars().all()
+    return results
 
 def get_historical_currency_data(session: Session, currency_code, start_date, end_date) -> list[CurrencyRate]:
-    with SessionLocal as session:
-        stmt = select(CurrencyRate).where(
-            CurrencyRate.currency_code == currency_code,
-            CurrencyRate.rate_date >= start_date,
-            CurrencyRate.rate_date <= end_date
-        )
-        results = session.execute(stmt).scalars().all()
-        return results
+
+    stmt = select(CurrencyRate).where(
+        CurrencyRate.currency_code == currency_code,
+        CurrencyRate.rate_date >= start_date,
+        CurrencyRate.rate_date <= end_date
+    )
+    results = session.execute(stmt).scalars().all()
+    return results
     
 
 
@@ -43,7 +42,6 @@ def run_query(currency_code, start_date=None, end_date=None):
     session = SessionLocal()
     try:
         columns = CurrencyRate.__table__.columns.keys()
-        df = pd.DataFrame(columns=columns)
 
         if start_date and end_date:
             data = get_historical_currency_data(
@@ -52,11 +50,14 @@ def run_query(currency_code, start_date=None, end_date=None):
                 start_date,
                 end_date
             )
-            df = pd.concat([df, pd.DataFrame(data)], ignore_index=True)
-            
         else:
             data = get_all_currency_data(session, currency_code)
-            df = pd.concat([df, pd.DataFrame(data)], ignore_index=True)
+
+        if data:
+            data_dicts = [{col: getattr(item, col) for col in columns} for item in data]
+            df = pd.DataFrame(data_dicts)
+        else:
+            df = pd.DataFrame(columns=columns)
         
         if not df.empty:
             df.set_index('rate_date', inplace=True)
