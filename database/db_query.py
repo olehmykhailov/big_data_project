@@ -1,13 +1,14 @@
-from db import SessionLocal
+from database.db import SessionLocal
 from sqlalchemy.orm import Session
 from sqlalchemy import select
 import argparse
 import pandas as pd
 import pathlib
 import os
-from models import CurrencyRate
+from database.models import CurrencyRate
 
-QUERIED_DATA_PATH = pathlib.Path(__file__).parent.parent / "queried_data"
+PROJECT_ROOT = pathlib.Path(__file__).parent.parent
+QUERIED_DATA_PATH = PROJECT_ROOT / "queried_data"
 os.makedirs(QUERIED_DATA_PATH, exist_ok=True)
 
 def get_all_currency_data(session: Session, currency_code) -> list[CurrencyRate]:
@@ -38,28 +39,36 @@ def parse_args():
     parser.add_argument("end_date", type=str, help="End date in YYYY-MM-DD format")
     return parser.parse_args()
 
-def main():
-    args = parse_args()
+def run_query(currency_code, start_date=None, end_date=None):
     session = SessionLocal()
-    columns = CurrencyRate.__table__.columns.keys()
-    df = pd.DataFrame(columns=columns)
+    try:
+        columns = CurrencyRate.__table__.columns.keys()
+        df = pd.DataFrame(columns=columns)
 
-    if args.start_date and args.end_date:
-        data = get_historical_currency_data(
-            session,
-            args.currency_code,
-            args.start_date,
-            args.end_date
-        )
-
-        df = pd.concat([df, pd.DataFrame(data)], ignore_index=True)
+        if start_date and end_date:
+            data = get_historical_currency_data(
+                session,
+                currency_code,
+                start_date,
+                end_date
+            )
+            df = pd.concat([df, pd.DataFrame(data)], ignore_index=True)
+            
+        else:
+            data = get_all_currency_data(session, currency_code)
+            df = pd.concat([df, pd.DataFrame(data)], ignore_index=True)
         
-    else:
-        data = get_all_currency_data(session, args.currency_code)
+        if not df.empty:
+            df.set_index('rate_date', inplace=True)
+            output_file = QUERIED_DATA_PATH / f"{currency_code}_data.csv"
+            df.to_csv(output_file)
+            print(f"Data saved to {output_file}")
+        else:
+            print(f"No data found for currency {currency_code}")
 
-        df = pd.concat([df, pd.DataFrame(data)], ignore_index=True)
-    
-    df.set_index('rate_date', inplace=True)
+    finally:
+        session.close()
 
-    output_file = QUERIED_DATA_PATH / f"{args.currency_code}_data.csv"
-    df.to_csv(output_file)
+if __name__ == "__main__":
+    args = parse_args()
+    run_query(args.currency_code, args.start_date, args.end_date)
