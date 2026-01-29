@@ -40,9 +40,9 @@
 
 ### 2.2 Relacje (ORM)
 
-* `currencies (code)` **1 -> *** `currencies_rates (code)`
-* `Calendar` **1 -> *** `currencies_rates (rate_date)`
-* `Calendar` **1 -> *** `gold_prices (price_date)`
+* `currencies (code)` 1 -> * `currencies_rates (code)`
+* `Calendar` 1 -> * `currencies_rates (rate_date)`
+* `Calendar` 1 -> * `gold_prices (price_date)`
 
 ### 2.3 Role i uprawnienia
 
@@ -72,8 +72,8 @@ API NBP dzieli kursy walut na trzy główne kategorie:
 ### 3.2 Szczegóły zawartości
 
 1. **Tabela A**: Zawiera najpopularniejsze waluty świata (USD, EUR, GBP, CHF, JPY itd.). Jest to podstawowe źródło danych dla większości analiz finansowych.
-2. **Tabela B**: Obejmuje waluty egzotyczne, które nie wykazują dużej zmienności płynności (np. afgani, birr etiopski). Ważne: przy pobieraniu danych historycznych należy pamiętać, że daty w tej tabeli są odstępach siedmiodniowych.
-3. **Tabela C**: Jedyna tabela zawierająca spread (różnicę między kupnem a sprzedażą). W Twoim obecnym schemacie bazy danych (`currencies_rates`) przechowujesz jeden parametr `rate` – jeśli planujesz używać Tabeli C, warto rozważyć dodanie pól `bid` (kupno) i `ask` (sprzedaż).
+2. **Tabela B**: Obejmuje waluty egzotyczne, które nie wykazują dużej zmienności płynności (np. afgani, birr etiopski).
+3. **Tabela C**: Jedyna tabela zawierająca spread (różnicę między kupnem a sprzedażą).
 
 ### 3.3 Ceny złota
 
@@ -86,7 +86,7 @@ Dane o złocie są obsługiwane przez osobny punkt końcowy (endpoint). NBP publ
 ### 4.1 Tryby pracy
 
 * **Daily (Codzienny)**: Pobieranie aktualnych danych (tryb domyślny, uruchamiany przez Amazon EventBridge).
-* **Historical (Historyczny)**: Pobieranie danych wstecz (on-demand). Wymaga parametrów `start_date` oraz `end_date`.
+* **Historical (Historyczny)**: Pobieranie danych historycznych (on-demand). Wymaga parametrów `start_date` oraz `end_date`.
 > **Uwaga:** Należy uwzględnić, że różne tabele NBP mają różne daty początkowe publikacji danych.
 
 
@@ -105,7 +105,7 @@ Dane o złocie są obsługiwane przez osobny punkt końcowy (endpoint). NBP publ
 * **Kursy walut (Currency Rates)**:
 * Wykres liniowy w czasie.
 * Filtry: waluta, rok.
-* Karty (KPI) z podstawowymi metrykami statystycznymi (min, max, średnia).
+* Karty z podstawowymi metrykami statystycznymi (min, max, średnia).
 
 
 * **Ceny złota (Gold Prices)**:
@@ -117,5 +117,5 @@ Dane o złocie są obsługiwane przez osobny punkt końcowy (endpoint). NBP publ
 
 ### 6.1 Analiza cen złota i cen walut
 
-* W 2022 ewidentnie widać spadek jednych z najpopularniejszych cen walut takich jak EURO czy Dolar Amerykański i jednoczesny dynamiczny wzrost cen złota. Taka reakcja rynku najprawdopodobniej jest spowodowana rosnącymi niepokojami wśród inwestorów związanych z konfliktami zbrojnymi na świecie i napiętą sytuacją geopolityczną. 
+* W 2022 ewidentnie widać spadek jednych z najpopularniejszych cen walut takich jak Euro czy Dolar Amerykański i jednoczesny dynamiczny wzrost cen złota. Taka reakcja rynku najprawdopodobniej jest spowodowana rosnącymi niepokojami wśród inwestorów związanych z konfliktami zbrojnymi na świecie i napiętą sytuacją geopolityczną. 
 * Spadki Euro spowodowane są wojną w regionie, tuż za granią Unii Europejskiej a Stany Zjednoczone angażują się w konflikty zbrojne oraz prezydent podejmuje mało przewidywalne decyzje, które zachęcają prywatnych inwestorów do przeniesienia pieniędzy w aktywo nie powiązane ze Stanami Zjednoczonymi, podobną dynamikę możemy zauważyć w bankach centralnych, które skupują złoto jednocześnie powoli odchodząc od Dolara Amerykańskiego choć w dalszym ciągu Dolar Amerykański pozostaje bardzo ważną walutą rezerwową dla wielu państw.
