@@ -146,23 +146,30 @@ Utwórz plik `.env` i skonfiguruj połączenie do bazy danych:
 DATABASE_URL=postgresql://user:password@host:port/dbname
 ```
 
-### Uruchomienie ETL
+### Uruchomienie aplikacji (Główny punkt wejścia)
 
-Skrypt `etl.py` udostępnia interfejs CLI z trzema trybami:
+Głównym punktem wejścia do aplikacji jest plik `main.py`. Obsługuje on zarówno procesy ETL, jak i zapytania o dane.
 
-1. **Inicjalizacja** (wypełnienie słownika walut):
+**Dostępne tryby:**
+
+1. **ETL (Command: `etl`)**
+   * **Inicjalizacja** (wypełnienie słownika walut):
+     ```bash
+     python main.py etl init --csv-path currencies.csv
+     ```
+   * **Pobranie danych dziennych** (dla bieżącej daty):
+     ```bash
+     python main.py etl daily
+     ```
+   * **Pobranie danych historycznych** (zakres dat):
+     ```bash
+     python main.py etl history --start 2024-01-01 --end 2024-12-31
+     ```
+
+2. **Pobieranie danych (Command: `query`)**
+   Pozwala na pobranie danych dla wybranej waluty i zapisanie ich do pliku CSV w folderze `queried_data/`.
    ```bash
-   python etl.py init --csv-path currencies.csv
-   ```
-
-2. **Pobranie danych dziennych** (dla bieżącej daty):
-   ```bash
-   python etl.py daily
-   ```
-
-3. **Pobranie danych historycznych** (zakres dat):
-   ```bash
-   python etl.py history --start 2024-01-01 --end 2024-12-31
+   python main.py query USD --start 2024-01-01 --end 2024-01-31
    ```
 
 ---
@@ -173,10 +180,17 @@ Poniżej przedstawiono kluczowe pliki w projekcie oraz ich rolę w architekturze
 
 ### 8.1 Opis komponentów
 
+* **`main.py`**:
+  * Główny punkt wejścia aplikacji (CLI).
+  * Udostępnia interfejs do zarządzania procesami ETL (`init`, `daily`, `history`) oraz odpytywania bazy danych (`query`).
+
+* **`database/db_query.py`**:
+  * Moduł odpowiedzialny za wykonywanie zapytań SQL do bazy danych.
+  * Umożliwia pobieranie historycznych kursów dla zadanej waluty i eksportowanie ich do plików CSV w folderze `queried_data/`.
+
 * **`etl.py`**:
-  * Główny punkt wejścia dla operacji lokalnych/CLI.
-  * Orkiestruje proces pobierania danych z NBP i zapisu do bazy.
-  * Obsługuje tryby: `init` (ładowanie słowników), `daily` (dzienne pobieranie), `history` (uzupełnianie wsteczne).
+  * Zawiera logikę biznesową procesów ETL (Extract, Transform, Load).
+  * Jest wykorzystywany zarówno przez `main.py` (uruchomienie lokalne), jak i `lambda_handler.py` (uruchomienie w chmurze).
 
 * **`nbp_client.py`**:
   * Warstwa komunikacji z REST API Narodowego Banku Polskiego.
